@@ -26,12 +26,26 @@ const server = http.createServer((req, res) => {
   }
 
   if (req.method === "GET" && req.url === "/static/images/dog.jpg") {
-    const dogImage = fs.readFileSync("./assets/images/dog.jpg")
+    const dogImage = fs.readFileSync("./assets/images/dog.jpg");
 
     res.statusCode = 200;
     res.setHeader("Content-Type", "image/jpeg");
-    res.end(dogImage)
+    res.end(dogImage);
   }
+
+  if (req.method === "GET" && req.url === "/static/css/application.css") {
+    const css = fs.readFileSync("./assets/css/application.css");
+
+    res.statusCode = 200;
+    res.setHeader("content-type", "text/css");
+    res.end(css);
+  }
+
+  // if (req.method === "GET" && res) {
+  //   res.statusCode = 404;
+  //   res.setHeader("content-type", "text/plain");
+  //   res.end("No matching route handler found for this endpoint");
+  // }
 });
 
 const port = 5000;
