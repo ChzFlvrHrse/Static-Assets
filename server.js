@@ -1,8 +1,37 @@
 const http = require('http');
 const fs = require("fs");
 
+const responseBody = `<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/static/css/application.css" rel="stylesheet" />
+  <title>Example</title>
+</head>
+
+<body>
+  <h1>Hello World!</h1>
+  <img src="/static/images/dog.jpg" />
+</body>
+
+</html>`;
+
 const server = http.createServer((req, res) => {
-  // Your code here
+  if (req.method === "GET" && req.url === "/") {
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "text/html");
+    res.end(responseBody);
+  }
+
+  if (req.method === "GET" && req.url === "/static/images/dog.jpg") {
+    const dogImage = fs.readFileSync("./assets/images/dog.jpg")
+
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "image/jpeg");
+    res.end(dogImage)
+  }
 });
 
 const port = 5000;
